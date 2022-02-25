@@ -90,7 +90,7 @@ export default class MainScene extends Phaser.Scene {
           // rt1.draw(mario, 50, 50);
           mario.setTint(0xFF00FF);
           mario.setRotation(Math.PI / 2);
-          rt1.draw(mario, 50, 75);
+          rt1.draw(mario, 50, 70);
 
           step += 1;
           return;
@@ -100,13 +100,21 @@ export default class MainScene extends Phaser.Scene {
           rt2.clear();
           rt2.draw(rt1, 0, 0);
 
-          let y = 75-mario.displayHeight/2;
+          let y = 70-mario.displayHeight/2;
 
-          if (USE_WEBGL) {
-            y = rt2.height - 75 - mario.displayHeight/2;
-          }
+          // if (USE_WEBGL) {
+          //   y = rt2.height - 70 - mario.displayHeight/2;
+          // }
           // canvas:
           rt2.texture.add('test-frame2', 0, 50 - mario.displayWidth/2, y, mario.displayWidth, mario.displayHeight)
+
+
+          y = 50-mario.displayHeight/2;
+
+          // if (USE_WEBGL) {
+          //   y = rt2.height - (50 - mario.displayHeight/2);
+          // }
+          rt2.texture.add('test-frame', 0, 50 - mario.displayWidth/2, y, mario.displayWidth, -mario.displayHeight)
 
           // webgl:
           // rt2.texture.add('test-frame2', 0, 50 - mario.displayWidth/2, rt2.height - 75-mario.displayHeight/2, mario.displayWidth, mario.displayHeight)
@@ -124,6 +132,7 @@ export default class MainScene extends Phaser.Scene {
 
         case 6: {
           rt1.clear();
+          // rt1.drawFrame('rt2-texture', 'test-frame2', 16, 0, 1);
           rt1.drawFrame('rt2-texture', 'test-frame2', 0, 0, 1);
           // rt1.draw(rt2, 0,0);
           // rt2.fill(0xa1e064, 0.5);
@@ -134,6 +143,21 @@ export default class MainScene extends Phaser.Scene {
 
       }
     });
+
+
+    let colorIndex = 0;
+    const spectrum = Phaser.Display.Color.ColorSpectrum(128);
+
+    let radius = 128;
+    let intensity = 0.0;
+    let attenuation = 0.1;
+
+    let light = this.add.pointlight(0, 0, 0, radius, intensity);
+
+    let color = spectrum[colorIndex];
+
+    light.color.setTo(color.r, color.g, color.b);
+
   };
 
   update = (time: number, delta: number) => {

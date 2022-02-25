@@ -1,3 +1,3 @@
 
 
-export const USE_WEBGL = false;
+export const USE_WEBGL = true;
